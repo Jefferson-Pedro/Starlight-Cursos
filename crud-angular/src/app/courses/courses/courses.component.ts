@@ -9,15 +9,15 @@ import { CoursesService } from '../sevices/courses.service';
   styleUrls: ['./courses.component.scss']
 })
 
-export class CoursesComponent implements OnInit{
-  
+export class CoursesComponent implements OnInit {
 
-  cursos: Observable <Course []>;
+
+  cursos$: Observable<Course[]>;
   displayedColumns = ['name', 'category'];
 
-  constructor(private coursesService: CoursesService){
-   this.cursos = this.coursesService.listarCursos();
+  constructor(private coursesService: CoursesService) {
+    this.cursos$ = this.coursesService.listarCursos();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }
