@@ -48,7 +48,7 @@
 </tr>
 <tr>
 	<td>SpringBoot</td>
-	<td>2.7.4</td>
+	<td>3.0.0</td>
 </tr>
 <tr>
 	<td>Git</td>
