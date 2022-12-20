@@ -6,14 +6,11 @@
 
 <h3>Features</h3>
 
-✔️ A aplicação deve cadastrar produtos no banco de dados <br>
-✔️ A aplicação deve permitir a consulta de produtos <br>
-✔️ A aplicação deve permitir a alteração de dados dos produtos <br>
-✔️ A aplicação deve a crição listas com data e local de compras <br>
-✔️ A aplicação deve permitir exclusão de uma lista <br>
-✔️ A aplicação deve a inserção de dados numa lista <br>
-✔️ A aplicação deve permitir a remoção de um item cadastrado na lista <br>
-✔️ A aplicação deve concluir a lista com o preço total dos itens inclusos <br>
+✔️ A aplicação deve cadastrar cursos no banco de dados <br>
+✔️ A aplicação deve permitir a consulta de cursos<br>
+✔️ A aplicação deve permitir a alteração de dados dos cursos<br>
+✔️ A aplicação deve permitir exclusão de um curso <br>
+✔️ A aplicação deve a inserção de dados <br>
 
 <h3>Demostração da Aplicação</h3>
 <p>🚨 Antes de começar, você precisará ter instalado em sua máquina as seguintes ferramentas:</p>
