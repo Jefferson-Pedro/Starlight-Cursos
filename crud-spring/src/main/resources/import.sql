@@ -1,0 +1,1 @@
+INSERT INTO courses(id, name, category) VALUES (1,'Angular com Spring','front-end');
