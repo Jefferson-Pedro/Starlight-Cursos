@@ -11,7 +11,7 @@ import br.com.crudspring.model.Courses;
 import br.com.crudspring.repositories.CourseRepository;
 
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("/api/courses")
 public class CourseController {
 	
 	@Autowired
