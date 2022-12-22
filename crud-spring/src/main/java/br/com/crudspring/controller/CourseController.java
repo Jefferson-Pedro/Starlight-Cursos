@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.crudsprin.model.Courses;
-import br.com.crudspring.repository.CourseRepository;
+import br.com.crudspring.model.Courses;
+import br.com.crudspring.repositories.CourseRepository;
 
 @RestController
 @RequestMapping("/courses")

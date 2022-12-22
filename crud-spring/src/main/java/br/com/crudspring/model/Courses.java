@@ -1,4 +1,4 @@
-package br.com.crudsprin.model;
+package br.com.crudspring.model;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
