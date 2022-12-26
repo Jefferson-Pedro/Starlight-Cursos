@@ -23,7 +23,7 @@ export class CoursesComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private rotaAtual: ActivatedRoute
-    ) {
+    ) { 
 
     this.cursos$ = this.coursesService.listarCursos().pipe(
       catchError(error => {
