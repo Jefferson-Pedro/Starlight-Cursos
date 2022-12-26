@@ -16,14 +16,13 @@ export class CoursesComponent implements OnInit {
 
 
   cursos$: Observable<Course[]>;
-  displayedColumns = ['_id', 'name', 'category', 'actions']; //Colunas a serem exibidas
+ 
 
   constructor(
     private coursesService: CoursesService,
     public dialog: MatDialog,
     private router: Router,
     private rotaAtual: ActivatedRoute
-
     ) {
 
     this.cursos$ = this.coursesService.listarCursos().pipe(
