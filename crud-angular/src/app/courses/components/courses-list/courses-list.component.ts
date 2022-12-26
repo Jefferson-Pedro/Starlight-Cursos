@@ -1,7 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { Course } from '../models/course';
+import { Course } from '../../models/course';
 
 @Component({
   selector: 'app-courses-list',
@@ -11,16 +10,15 @@ import { Course } from '../models/course';
 export class CoursesListComponent {
 
   @Input() cursos : Course[] = [];
+  @Output() add = new EventEmitter(false);
 
   readonly displayedColumns = ['_id', 'name', 'category', 'actions']; //Colunas a serem exibidas
 
-  constructor( 
-    private router: Router,
-    private rotaAtual: ActivatedRoute){}
+  constructor(){}
 
   ngOnInit(): void {}
 
   public adicionarCurso(){
-    this.router.navigate(['new'], {relativeTo: this.rotaAtual});
+   this.add.emit(true);
   }
 }
