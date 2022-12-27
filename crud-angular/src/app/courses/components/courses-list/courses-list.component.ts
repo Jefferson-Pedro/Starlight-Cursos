@@ -11,6 +11,7 @@ export class CoursesListComponent {
 
   @Input() cursos : Course[] = [];
   @Output() add = new EventEmitter(false);
+  @Output() edit = new EventEmitter(false);
 
   readonly displayedColumns = ['_id', 'name', 'category', 'actions']; //Colunas a serem exibidas
 
@@ -20,5 +21,9 @@ export class CoursesListComponent {
 
   public adicionarCurso(){
    this.add.emit(true);
+  }
+
+  public editarCurso(curso: Course){
+    this.edit.emit(curso);
   }
 }

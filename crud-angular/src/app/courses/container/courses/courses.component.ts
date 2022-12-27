@@ -39,10 +39,14 @@ export class CoursesComponent implements OnInit {
     });
   }
   
-
   ngOnInit(): void { }
 
   public adicionarCurso(){
     this.router.navigate(['new'], {relativeTo: this.rotaAtual});
+  }
+
+  public editarCurso(curso: Course){
+    this.router.navigate(['edit', curso._id], {relativeTo: this.rotaAtual});
+
   }
 }

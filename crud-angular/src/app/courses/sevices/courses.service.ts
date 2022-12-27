@@ -23,6 +23,10 @@ export class CoursesService {
       tap(courses => console.log(courses))
     );
   }
+  
+  public carregarPorId(id: string){
+    return this.httpClient.get<Course>(`${this.API}/${id}`);
+  }
 
   public salvar(registro: Partial<Course>) {
     return this.httpClient.post<Course>(this.API, registro).pipe(first());
