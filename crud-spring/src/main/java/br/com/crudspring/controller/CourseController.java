@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +31,7 @@ public class CourseController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Courses> findById(@PathVariable Long id) {
 		return cr.findById(id)
-				.map(registro -> ResponseEntity.ok().body(registro))
+				.map(registroEncontrado -> ResponseEntity.ok().body(registroEncontrado))
 				.orElse(ResponseEntity.notFound().build());
 		
 	}
@@ -41,6 +42,18 @@ public class CourseController {
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
 				.body(cr.save(course));
+	}
+	
+	@PutMapping("/{id}")
+	public ResponseEntity<Courses> update(@PathVariable Long id, @RequestBody Courses course) {
+		return cr.findById(id)
+				.map(registroEncontrado -> {
+					registroEncontrado.setName(course.getName());
+					registroEncontrado.setCategory(course.getCategory());
+					Courses updated = cr.save(registroEncontrado);
+					return ResponseEntity.ok().body(updated);
+				})
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	
