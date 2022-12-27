@@ -27,6 +27,21 @@ export class CoursesService {
   }
 
   public salvar(registro: Partial<Course>) {
+    //console.log(registro);
+    if(registro._id){
+      //console.log('Atualizado! Uhuul');
+      return this.atualizar(registro);
+    }
+    //console.log('Criado com sucesso, parça!');
+    return this.criar(registro);
+  }
+
+  private criar(registro: Partial<Course>){
     return this.httpClient.post<Course>(this.API, registro).pipe(first());
+  }
+
+  private atualizar(registro: Partial<Course>){
+    return this.httpClient.put<Course>(`${this.API}/${registro._id}`, registro).pipe(first());
+
   }
 }
