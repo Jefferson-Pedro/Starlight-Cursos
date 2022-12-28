@@ -42,6 +42,9 @@ export class CoursesService {
 
   private atualizar(registro: Partial<Course>){
     return this.httpClient.put<Course>(`${this.API}/${registro._id}`, registro).pipe(first());
+  }
 
+  public deletar(id: string){
+    return this.httpClient.delete(`${this.API}/${id}`).pipe(first());
   }
 }

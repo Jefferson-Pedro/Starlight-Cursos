@@ -9,7 +9,8 @@
       <app-courses-list *ngIf="cursos$ | async as cursos; else carregando" 
       [cursos]="cursos" 
       (add)="adicionarCurso()"
-      (edit)="editarCurso($event)" >
+      (edit)="editarCurso($event)"
+      (remove)="excluirCurso($event)" >
       </app-courses-list>
 
       <ng-template #carregando>
