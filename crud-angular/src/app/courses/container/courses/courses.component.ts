@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, Observable, of } from 'rxjs';
+import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { ErrorDialogComponent } from 'src/app/shared/components/error-dialog/error-dialog.component';
 
 import { Course } from '../../models/course';
@@ -57,16 +58,25 @@ export class CoursesComponent implements OnInit {
   }
 
   public excluirCurso(curso: Course){
-    this.coursesService.deletar(curso._id).subscribe({
-      next: () =>  {
-        this.refresh();
-        this.snackBar.open('Curso Removido com Sucesso!', 'Ok', { 
-          duration: 3000 ,
-          verticalPosition:'top',
-          horizontalPosition: 'center'
+
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: 'Tem certeza que deseja remover esse curso?',
+    });
+
+    dialogRef.afterClosed().subscribe((resultado:boolean) => {
+      if(resultado){
+        this.coursesService.deletar(curso._id).subscribe({
+          next: () =>  {
+            this.refresh();
+            this.snackBar.open('Curso Removido com Sucesso!', 'Ok', { 
+              duration: 3000 ,
+              verticalPosition:'top',
+              horizontalPosition: 'center'
+            });
+          },
+          error: () => this.onError('Erro ao tentar remover curso.')
         });
-      },
-      error: () => this.onError('Erro ao tentar remover curso.')
+      }
     });
   }
 }
