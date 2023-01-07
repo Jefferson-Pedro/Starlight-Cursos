@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.crudspring.model.Courses;
 import br.com.crudspring.repositories.CourseRepository;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @CrossOrigin("*")
+@Validated
 @RestController
 @RequestMapping("/api/courses")
 public class CourseController {
@@ -30,7 +35,7 @@ public class CourseController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Courses> findById(@PathVariable Long id) {
+	public ResponseEntity<Courses> findById(@PathVariable @NotNull @Positive Long id) {
 		return cr.findById(id)
 				.map(registroEncontrado -> ResponseEntity.ok().body(registroEncontrado))
 				.orElse(ResponseEntity.notFound().build());
@@ -38,7 +43,7 @@ public class CourseController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Courses> createCourse(@RequestBody Courses course) {
+	public ResponseEntity<Courses> createCourse(@RequestBody @Valid Courses course) {
 		
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
@@ -46,7 +51,9 @@ public class CourseController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Courses> update(@PathVariable Long id, @RequestBody Courses course) {
+	public ResponseEntity<Courses> update(@PathVariable @NotNull @Positive Long id, 
+			@RequestBody @Valid Courses course) {
+		
 		return cr.findById(id)
 				.map(registroEncontrado -> {
 					registroEncontrado.setName(course.getName());
@@ -58,7 +65,7 @@ public class CourseController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
+	public ResponseEntity<Void> delete(@PathVariable  @NotNull @Positive Long id) {
 		return cr.findById(id)
 				.map(registroEncontrado -> {
 					cr.deleteById(id);
