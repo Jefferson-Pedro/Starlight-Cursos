@@ -1,6 +1,9 @@
 package br.com.crudspring.model;
 
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
@@ -16,6 +19,8 @@ import lombok.Data;
 
 @Entity
 @Data
+@SQLDelete(sql = "UPDATE Courses SET status = 'Inativo' WHERE id = ?")
+@Where(clause = "status = 'Ativo' ")
 public class Courses {
 	
 	@Id
@@ -35,6 +40,13 @@ public class Courses {
 	@Pattern(regexp = "back-end|front-end|fullstack")
 	@Column(length = 20, nullable = false)
 	private String category;
+	
+	@NotBlank
+	@NotNull
+	@Size(max=20)
+	@Pattern(regexp = "Ativo|Inativo")
+	@Column(length = 10, nullable = false)
+	private String status = "Ativo";
 
 	public Long getId() {
 		return id;
