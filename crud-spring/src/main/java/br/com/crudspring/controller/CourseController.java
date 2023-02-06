@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import br.com.crudspring.model.Courses;
 import br.com.crudspring.repositories.CourseRepository;
+import br.com.crudspring.service.CourseService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -27,16 +29,21 @@ import jakarta.validation.constraints.Positive;
 public class CourseController {
 	
 	@Autowired
-	private CourseRepository cr;
 	
+	private final CourseService cs;
+	
+	public CourseController( CourseService cs) {
+		this.cs = cs;
+	}
+
 	@GetMapping
-	public List<Courses> list(){
-		return cr.findAll();
+	public @ResponseBody List<Courses> list(){
+		return cs.list();
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Courses> findById(@PathVariable @NotNull @Positive Long id) {
-		return cr.findById(id)
+		return cs.findById(id)
 				.map(registroEncontrado -> ResponseEntity.ok().body(registroEncontrado))
 				.orElse(ResponseEntity.notFound().build());
 		
@@ -44,34 +51,27 @@ public class CourseController {
 	
 	@PostMapping
 	public ResponseEntity<Courses> createCourse(@RequestBody @Valid Courses course) {
-		
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
-				.body(cr.save(course));
+				.body(cs.createCourse(course));
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Courses> update(@PathVariable @NotNull @Positive Long id, 
 			@RequestBody @Valid Courses course) {
 		
-		return cr.findById(id)
-				.map(registroEncontrado -> {
-					registroEncontrado.setName(course.getName());
-					registroEncontrado.setCategory(course.getCategory());
-					Courses updated = cr.save(registroEncontrado);
-					return ResponseEntity.ok().body(updated);
-				})
+		return cs.update(id, course)
+				.map(registroEncontrado -> ResponseEntity.ok().body(registroEncontrado))
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable  @NotNull @Positive Long id) {
-		return cr.findById(id)
-				.map(registroEncontrado -> {
-					cr.deleteById(id);
-					return ResponseEntity.noContent().<Void>build();
-				})
-				.orElse(ResponseEntity.notFound().build());
+		if(cs.delete(id)) {
+				return ResponseEntity.noContent().<Void>build();
+		}else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 }
