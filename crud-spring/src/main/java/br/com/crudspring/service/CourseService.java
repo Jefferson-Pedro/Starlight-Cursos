@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import br.com.crudspring.exception.RegistroNaoEncontrado;
 import br.com.crudspring.model.Courses;
 import br.com.crudspring.repositories.CourseRepository;
 import jakarta.validation.Valid;
@@ -30,16 +31,15 @@ public class CourseService {
 		return cr.findAll();
 	}
 
-	public Optional<Courses> findById(@PathVariable @NotNull @Positive Long id) {
-		return cr.findById(id);
+	public Courses findById(@PathVariable @NotNull @Positive Long id) {
+		return cr.findById(id).orElseThrow(() -> new RegistroNaoEncontrado(id));
 	}
 
 	public Courses createCourse( @Valid Courses course) {
-
 		return cr.save(course);
 	}
 	
-	public Optional<Courses> update( @NotNull @Positive Long id, 
+	public Courses update( @NotNull @Positive Long id, 
 							@Valid Courses course) {
 		
 		return cr.findById(id)
@@ -47,16 +47,13 @@ public class CourseService {
 					registroEncontrado.setName(course.getName());
 					registroEncontrado.setCategory(course.getCategory());
 					return cr.save(registroEncontrado);
-				});
+				}).orElseThrow(() -> new RegistroNaoEncontrado(id));
 	}
 	
-	public boolean delete(@PathVariable  @NotNull @Positive Long id) {
-		return cr.findById(id)
-				.map(registroEncontrado -> {
-					cr.deleteById(id);
-					return ResponseEntity.noContent().<Void>build();
-				})
-				.orElse(ResponseEntity.notFound().build());
+	public void delete(@PathVariable  @NotNull @Positive Long id) {
+		
+		cr.delete(cr.findById(id).orElseThrow(() -> new RegistroNaoEncontrado(id)));
+		
 	}
 
 }
