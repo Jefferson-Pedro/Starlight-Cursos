@@ -1,4 +1,4 @@
-<h1> Sistema de Cadastro de Cursos</h1>
+<h1> Starlight Cursos </h1>
 <p> Projeto Desenvolvido com o curso Crud Angular + Spring⚡</p>
 
 <h3>Status do Projeto</h3>
